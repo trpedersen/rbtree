@@ -10,3 +10,7 @@ I'm adding concurrency features, aim is to have most operations via channels for
 
 Right now not thread safe, but well tested for single thread usage.
 
+rbtree.Keys() and rbtree.KeysInRange() is good for returning an ordered slice of whatever you've saved in the tree.
+
+rbtree.KeysCh() and rbtree.KeysInRangeCh() is good for iterating through the tree in order, without the cost of creating a slice.
+

@@ -386,7 +386,7 @@ func TestKeysInRangeCh(t *testing.T) {
 	var sum int = 0
 	for _key := range keys {
 		key := _key.(*IntKey)
-		log.Println(key)
+		//log.Println(key)
 		tree.Put(&IntKey{key: key.key + 1, value: key.value * 10})
 		count++
 		sum += key.value

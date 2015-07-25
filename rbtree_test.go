@@ -21,7 +21,7 @@ type StringKey struct {
 	value string
 }
 
-func (this *StringKey) Compare(other Key) int {
+func (this *StringKey) CompareTo(other Key) int {
 	otherK := other.(*StringKey)
 	if this.key == otherK.key {
 		return 0
@@ -37,7 +37,7 @@ type IntKey struct {
 	value int
 }
 
-func (this *IntKey) Compare(other Key) int {
+func (this *IntKey) CompareTo(other Key) int {
 	otherK := other.(*IntKey)
 	if this.key == otherK.key {
 		return 0

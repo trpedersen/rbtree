@@ -5,7 +5,7 @@ import (
 )
 
 type Key interface {
-	Compare(Key) int
+	CompareTo(Key) int
 }
 
 type Node struct {
@@ -62,7 +62,7 @@ func (tree *RBTree) IsEmpty() bool {
 	return tree.root == nil
 }
 
-func compare(a string, b string) int {
+func CompareTo(a string, b string) int {
 	//compares += 1
 	if a == b {
 		return 0
@@ -86,7 +86,7 @@ func put(node *Node, key Key) *Node {
 	if node == nil {
 		return NewNode(key, RED, 1)
 	}
-	cmp := key.Compare(node.key)
+	cmp := key.CompareTo(node.key)
 	if cmp < 0 {
 		node.left = put(node.left, key)
 	} else if cmp > 0 {
@@ -159,7 +159,7 @@ func get(node *Node, key Key) *Node {
 	if node == nil {
 		return nil
 	}
-	cmp := key.Compare(node.key)
+	cmp := key.CompareTo(node.key)
 	if cmp < 0 {
 		return get(node.left, key)
 	} else if cmp > 0 {
@@ -189,7 +189,7 @@ func deleteNode(node *Node, key Key) *Node {
 		return nil
 	}
 
-	if key.Compare(node.key) < 0 {
+	if key.CompareTo(node.key) < 0 {
 		if !isRed(node.left) && !isRed(node.left.left) {
 			node = moveRedLeft(node)
 		}
@@ -198,13 +198,13 @@ func deleteNode(node *Node, key Key) *Node {
 		if isRed(node.left) {
 			node = rotateRight(node)
 		}
-		if key.Compare(node.key) == 0 && (node.right == nil) {
+		if key.CompareTo(node.key) == 0 && (node.right == nil) {
 			return nil
 		}
 		if !isRed(node.right) && !isRed(node.right.left) {
 			node = moveRedRight(node)
 		}
-		if key.Compare(node.key) == 0 {
+		if key.CompareTo(node.key) == 0 {
 			x := min(node.right)
 			node.key = x.key
 			node.right = deleteMin(node.right)
@@ -265,7 +265,7 @@ func floor(node *Node, key Key) *Node {
 	if node == nil {
 		return nil
 	}
-	cmp := key.Compare(node.key)
+	cmp := key.CompareTo(node.key)
 	if cmp == 0 {
 		return node
 	} else if cmp < 0 {
@@ -293,7 +293,7 @@ func ceiling(node *Node, key Key) *Node {
 	if node == nil {
 		return nil
 	}
-	cmp := key.Compare(node.key)
+	cmp := key.CompareTo(node.key)
 	if cmp == 0 {
 		return node
 	} else if cmp > 0 {
@@ -316,7 +316,7 @@ func rank(node *Node, key Key) int {
 	if node == nil {
 		return 0
 	}
-	cmp := key.Compare(node.key)
+	cmp := key.CompareTo(node.key)
 	if cmp == 0 {
 		return size(node.left)
 	} else if cmp < 0 {
@@ -469,7 +469,7 @@ func (tree *RBTree) Keys() []Key {
 
 func (tree *RBTree) KeysInRange(lo Key, hi Key) []Key {
 	queue := make([]Key, 0, 0)
-	if tree.IsEmpty() || lo.Compare(hi) > 0 {
+	if tree.IsEmpty() || lo.CompareTo(hi) > 0 {
 		return queue
 	}
 
@@ -481,8 +481,8 @@ func keys(node *Node, queue *[]Key, lo Key, hi Key) {
 	if node == nil {
 		return
 	}
-	cmplo := lo.Compare(node.key)
-	cmphi := hi.Compare(node.key)
+	cmplo := lo.CompareTo(node.key)
+	cmphi := hi.CompareTo(node.key)
 	if cmplo < 0 {
 		keys(node.left, queue, lo, hi)
 	}
@@ -514,8 +514,8 @@ func keysCh(quit <-chan struct{}, ch chan Key, node *Node, lo Key, hi Key) {
 	if node == nil {
 		return
 	}
-	cmplo := lo.Compare(node.key)
-	cmphi := hi.Compare(node.key)
+	cmplo := lo.CompareTo(node.key)
+	cmphi := hi.CompareTo(node.key)
 	if cmplo < 0 {
 		keysCh(quit, ch, node.left, lo, hi)
 	}

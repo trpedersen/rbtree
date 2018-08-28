@@ -14,3 +14,5 @@ rbtree.Keys() and rbtree.KeysInRange() is good for returning an ordered slice of
 
 rbtree.KeysCh() and rbtree.KeysInRangeCh() is good for iterating through the tree in order, without the cost of creating a slice.
 
+You're welcome to use this as you wish - no licencing restrictions, but no warranties, you're on your own!
+
